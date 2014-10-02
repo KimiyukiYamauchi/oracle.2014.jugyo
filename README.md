@@ -19,7 +19,7 @@ $ sudo aptitude install rlwrap<br /><br />
 <br />$ git push -u origin master<br /><br />
 6. Oracleサーバへの接続確認
 	1. 接続のためのスクリプトを作成<br />
-$ vi sqplus.sh<br >
+$ vi sqlplus.sh<br >
 で、ファイルを開き、以下を入力。<br />
 LD_LIBRARY_PATH=/home/yamauchi/instantclient_12_1<br />
 PATH=/home/yamauchi/instantclient_12_1:$PATH<br />
@@ -69,9 +69,9 @@ SQL> select tname from tab;<br />
 
 	1. employees表のempno列、ename列を取り出すスクリプト(141002-1.sql)
 	2. employees表のすべての列を取り出すスクリプト(141002-2.sql)
-	3. employees表のひょう構造を表示するスクリプト(141002-3.sql)
+	3. employees表の表構造を表示するスクリプト(141002-3.sql)
 	4. employees表のename列、sal列、sal列に100000を足したものを12倍した列
 <br />を取り出すスクリプト(141002-4.sql)
-	5. employees表のename列、sal列、sal列に100000を足したものを12倍した列<br />
+	5. employees表のempno、ename、sal、sal列に100000を足したものを12倍した列<br />
 を取り出す、この時、それぞれに社員番号、社員名、給与、年収の別名<br />
 をつけるスクリプト(141002-5.sql)
