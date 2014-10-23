@@ -136,3 +136,109 @@ sal、deptno列を取り出すスクリプト(141009-1.sql)
 (141009-4.sql)
 	5. employees表でcommが「NULL」でないempno、ename、sal、comm列を取り出す<br />
 スクリプト(141009-5.sql)
+
+1. 2014/10/14
+
+	1. employees表でyomiが「TAKAHASHI」であるempno, ename, yomi列を小文字で格納されている<br />
+ため比較時に取得データを大文字に変換すること(141014-1.sql)
+	1. employees表からyomi列を取り出し、これを先頭のみ大文字に変換する。さらに、<br />
+「@std.it-college.ac.jp」と結合するスクリプト(141014-2.sql)
+	1. 文字列「Oracle Server」の２文字目から３文字取得および同じ文字列の２文字目<br />
+以降を取得するスクリプト(141014-3.sql)
+	1. 文字列「Oracle Server」の「Server」を「Master」に変換するスクリプト(141014-4.sql)
+	1. employees表からempno, ename, yomi列及びyomiの長さを取得するスクリプト(141014-5.sql)
+
+1. 2014/10/15
+
+	1. 以下のように日付の表示書式と表示言語を変更<br />
+alter session set nls_date_format = 'DD-MON-RR';<br />
+alter session set nls_date_language = 'AMERICAN';<br /> 
+その後、employees表からdeptnoが「10」のename, hiredate, を取り出すスクリプト(141015-1.sql)<br />
+「[NLS関連初期化パラメータ](http://www.shift-the-oracle.com/config/nlsparameter.html)」
+	1. 以下のように日付の表示書式と表示言語を元に戻す<br />
+alter session set nls_date_format = 'RR-MM-DD';<br />
+alter session set nls_date_language = 'JAPANESE';<br /> 
+その後、employees表からdeptnoが「10」のename, hiredate, を取り出すスクリプト(141015-2.sql)<br />
+	1. employees表からdeptnoが「10」のename, hiredate, hiredateの90日後、hiredateの90日前<br />
+を表示するスクリプト(141015-3.sql)
+	1. employees表からhiredateから今日までの経過した月数を小数点以下を切り捨てて表示する<br />
+スクリプト(141015-4.sql)
+	1. 今月の最終日を表示するスクリプト(141015-5.sql)
+
+1. 2014/10/16
+
+	1. 現在日時を「2014-10-11 12:16:10」の書式で文字列に変換して表示するスクリプト<br />
+(141016-1.sql)
+	1. 現在日時を「2014年10月11日(土曜日)」の書式で文字列に変換して表示するスクリプト<br />
+(141016-2.sql)
+	1. 以下のように日付の表示書式と表示言語を変更<br />
+alter session set nls_date_format = 'DD-MON-RR';<br />
+alter session set nls_date_language = 'AMERICAN';<br /> 
+その後、employees表からenameとhiredate（「15TH of October」の書式で変換）<br />
+を取り出すスクリプト(141016-3.sql)<br />
+	1. 以下のように日付の表示書式と表示言語を元に戻す<br />
+alter session set nls_date_format = 'RR-MM-DD';<br />
+alter session set nls_date_language = 'JAPANESE';<br /> 
+その後、文字列「2011年01月01日」を日付値に変換するスクリプト(141016-4.sql)<br />
+	1. 文字列「￥5,000,000」を数値の「5000000」に変換し、12で割るスクリプト<br />
+(141016-5.sql)
+
+1. 2014/10/21
+
+	1. employees表からename, sal, comm, sal+comm（commがnullの場合はNVL関数を使用して0と見なす）を表示するスクリプト(141021-1.sql)
+	1. employees表からename, sal, comm, sal+comm（commがnullの場合はNVL2関数を使用して0と見なす）を表示するスクリプト(141021-2.sql)
+	1. employees表からename, sal, comm, sal+comm（commがnullの場合はCOALESCE関数を使用して0と見なす）を表示するスクリプト(141021-3.sql)
+	1. employees表からenameとCASE式を使って、deptnoが10の時はsalを1.1倍、20の時は1.2倍、それ以外はsalを表示する。この時、計算結果の別名として、NEW_SALを表示する(141021-4.sql)
+	1. employees表からenameとDECODE関数を使って、deptnoが10の時はsalを1.1倍、20の時は1.2倍、それ以外はsalを表示する。この時、計算結果の別名として、NEW_SALを表示する(141021-5.sql)
+
+1. 2014/10/22
+
+	1. employees表からsalの平均と合計を表示するスクリプト(141022-1.sql)
+	1. employees表からdeptno毎のdeptno、人数、salの平均を表示する。この時、deptnoの昇順で、ソートする(141022-2.sql)
+	1. employees表からdeptno、job毎のdeptno、job、人数、salの平均を表示する。この時、deptnoの昇順で、ソートする。(141022-3.sql)
+	1. employees表からdeptno毎のsalの平均の最大値を表示するスクリプト(141022-4.sql)
+	1. employees表からdeptnoとjobの組み合わせ毎のdeptno、job、人数、salの平均を表示する。但し、人数が２人以上の組み合わせのみ表示する。この時、deptnoの昇順で、ソートする。(141022-5.sql)
+
+1. 2014/10/23
+
+	1. employees表とdepartments表を結合(deptno)し、empno, ename, dnameを表示するスクリプト(141023-1.sql)
+	1. employees表とdepartments表を結合(deptno)し、deptnoが10または20のempno, ename, dnameを表示するスクリプト(141023-2.sql)
+	1. orders表、customers表およびemployees表の３つの表を結合(orders.custno, customers.custno, orders.salesman_no, employees.empno)し、ordno, date_ordered, cname, enameを表示するスクリプト(141023-3.sql)
+	1. employees表とsalgrades表を非等価結合(employees.sal, salgrades.losal, salgrades.hisal)し、empno, ename, sal, gradeを表示するスクリプト(141023-4.sql)
+	1. employees表を自己結合(empno, mgr)して、empno, enameおよび上司のempno, enameを表示するスクリプト(141023-5.sql)
+	1. （応用問題）上記の自己結合で、外部結合を用い、「社長」のデータも取り出せる様に修正したスクリプト(141023-6.sql)
+
+1. 2014/10/28
+
+	1. USING句を使用し、employees表とdepartments表を結合(deptno)し、empno, ename, deptno, dnameを表示するスクリプト(141028-1.sql)
+	1. (準備)employees表に１件データを追加する<br />
+insert into employees(empno, ename, deptno) values(1015, '山口', null);<br />
+employees表とdepartments表を結合(deptno)し、empno, ename, deptno, dnameを表示する。この時、employees表のdeptnoがnullのデータも取り出せるスクリプト(141028-2.sql)
+	1. employees表とdepartmentsを結合(deptno)し、empno, ename, deptno, dnameを表示する。この時、employees表でだれも割り当られていないdepartments表の部門も取り出せるスクリプト(141028-3.sql)
+	1. employees表とdepartmentsを結合(deptno)し、empno, ename, deptno, dnameを表示する。この時、employees表のdeptnoがnullのデータ、およびemployees表でだれも割り当られていないdepartments表の部門も取り出せるスクリプト(141028-4.sql)
+	1. employees表とdepartments表をクロス結合し、empno, ename, dnameを表示するスクリプト(141028-5.sql)
+
+1. 2014/10/29
+
+	1. employees表からempnoが「1003」のsal（employees表から副問い合わせ)以上のempno, ename, salを表示するスクリプト(141029-1.sql)
+	1. employees表からdnameが「営業」（departments表から副問い合わせ）のempno, ename, deptnoを表示するスクリプト(141029-2.sql)
+	1. employees表からsalがempnoの「1003」以上（employees表から副問い合わせ）、かつdnameが「営業」（departments表から副問い合わせ)のempno, ename, sal, deptnoを表示するスクリプト(141029-3.sql)
+	1. employees表とdepartments表を結合(deptno)し、deptno, dname毎のsalの平均が全体の平均（employees表から副問い合わせ）以上であるdeptno, dname, avg(sal)を表示するスクリプト(141029-4.sql)
+	1. employees表を自己結合(empno, mgr)し、enameが「山田」または「伊藤」の上司(mgr)(employees表から副問い合わせ)のempno, enameおよび上司のenameを表示するスクリプト(141029-5.sql)
+
+1. 2014/10/30
+
+	1. employees表からdeptnoが「10」または「20」のdeptno, empno, enameを表示するselect文とdeptnoが「20」または「30」のdeptno, empno, enameを表示するselect文の問い合わせ結果を連結し、重複した行を排除して戻すスクリプト(141030-1.sql)
+	1. employees表からdeptnoが「10」または「20」のdeptno, empno, enameを表示するselect文とdeptnoが「20」または「30」のdeptno, empno, enameを表示するselect文の問い合わせ結果を連結し、重複した行も含めて戻すスクリプト(141030-2.sql)
+	1. employees表からdeptnoが「10」または「20」のdeptno, empno, enameを表示するselect文とdeptnoが「20」または「30」のdeptno, empno, enameを表示するselect文の問い合わせ結果を連結し、共通した行だけ戻すスクリプト(141030-3.sql)
+	1. employees表からdeptnoが「10」または「20」のdeptno, empno, enameを表示するselect文とdeptnoが「20」または「30」のdeptno, empno, enameを表示するselect文の問い合わせ結果を連結し、１つめのselect文の結果のうち、２つ目問い合わせ結果にない行を戻すスクリプト(141030-4.sql)
+	1. employees表からdeptnoが「10」または「20」のdeptno, empno, enameを表示するselect文とdeptnoが「20」または「30」のdeptno, empno, enameを表示するselect文の問い合わせ結果を連結し、重複した行を排除して戻す。この時、empnoの昇順で並べて表示するスクリプト(141030-5.sql)
+
+1. 2014/11/04
+
+	1. departments表にdeptno「50」、dname「教育」、loc「大手町」で、１行追加し、select文を実行し、正しく追加できていることを確認。その後、追加したデータを削除し、削除できていることを確認(141104-1.sql)
+	1. departments表にdeptno「60」、dname「経理」、locはnullで、１行追加し、select文を実行し、ただしく追加できていること確認。その後、追加したデータを削除し、削除できていることを確認（141104-2.sql)
+	1. employees表にempno, ename, hiredateを置換変数で入力、その他はnullで１行追加しselect文を実行し、正しく追加できていること確認。その後、追加したデータを削除し、削除できていることを確認(141104-3.sql)
+	1. （事前の操作）departments表からdept_copy表を作成。<br />
+create table dept_copy as select * from departments where 0 = 1;<br />
+departments表からselect文を使用してデータを取得し、deptno「deptno+1」、dname「dname」、loc「loc」データを追加し、select文を実行し、正しく追加できていることを確認(141104-4.sql)
