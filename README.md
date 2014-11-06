@@ -10,8 +10,9 @@ $ sudo aptitude install libaio1<br /><br />
 $ sudo aptitude install rlwrap<br /><br />
 1. 「[oracle.2014](https://github.com/KimiyukiYamauchi/oracle.2014.git)」を「git clone」
 <br />$ git clone https://github.com/KimiyukiYamauchi/oracle.2014.git (任意のディレクトリ名)<br /><br />
+1. cloneしたリポジトリに移動<br /><br />
 2. リモートリポジトリ「origin」を別の名前に変える
-<br />$ git remote rename origin  (任意の別名)<br /><br />
+<br />$ git remote rename origin  oracle.2014<br /><br />
 3. 各自のGithubに演習をアップするためのリポジトリを作成<br /><br />
 4. 上で作成したリモートリポジトリに「origin」と名前をつける
 <br />$ git remote add origin  (各自のリモートリポジトリのURL)<br /><br />
@@ -83,7 +84,7 @@ SQL> select tname from tab;
 	* ひな形などの最新を入手する場合、
 
 		1. 「[oracle.2014](https://github.com/KimiyukiYamauchi/oracle.2014.git)」を「git pull」
-<br />$ git pull (自分がつけた別名) master<br /><br />
+<br />$ git pull oracle.2014 master<br /><br />
 
 ## 演習問題
 
@@ -241,4 +242,110 @@ employees表とdepartments表を結合(deptno)し、empno, ename, deptno, dname�
 	1. employees表にempno, ename, hiredateを置換変数で入力、その他はnullで１行追加しselect文を実行し、正しく追加できていること確認。その後、追加したデータを削除し、削除できていることを確認(141104-3.sql)
 	1. （事前の操作）departments表からdept_copy表を作成。<br />
 create table dept_copy as select * from departments where 0 = 1;<br />
-departments表からselect文を使用してデータを取得し、deptno「deptno+1」、dname「dname」、loc「loc」データを追加し、select文を実行し、正しく追加できていることを確認(141104-4.sql)
+departments表からselect文を使用してデータを取得し、deptno「deptno+1」、dname「dname」、loc「loc」データを追加し、select文を実行し、正しく追加できていることを確認。その後、追加したデータを削除し、削除できていることを確認(141104-4.sql)
+
+1. 2014/11/05
+
+	1. （事前の操作）employees表からemp_copy表を作成。<br />
+create table emp_copy as select * from employees;<br />
+deptnoがnullのデータについて、deptno「10」を設定し、正しく更新出来ていることを確認。その後、ロールバックして、更新が取り消されていること確認。(141105-1.sql)
+	1. emp_copy表のempnoが「1012」のデータについて、ename「林」、depto「20」を設定（更新前は「吉田」、「30」）し、正しく更新できていることを確認。その後、ロールバックして、更新が取り消されていること確認。(141105-2.sql)
+	1. emp_copy表のempnoが「1013」および「1014」のデータについて、deptno「null」を設定し、正しく更新できていることを確認。その後、ロールバックして、更新が取り消されていること確認。(141105-3.sql)
+	1. emp_copy表のempnoがemployees表のenameが「加藤」に等しいデータ(副問い合わせ)について、jobにemployees表のempnoが「1010」のjob(副問い合わせ)、salにemployees表のempnoが「1010」のsal(副問い合わせ)をそれぞれ設定し、正しく更新出来ていることを確認。その後、ロールバックして、更新が取り消されていること確認。(141105-4.sql)
+
+1. 2014/11/06
+
+	1. 以下の操作を行うスクリプト(141106-1.sql)
+		1. dept_copy表にdeptno「50」、dname「教育」、loc「大手町」を追加
+		1. dept_copy表にdeptno「60」、dname「システム」、loc「横浜」を追加
+		1. select文で、上記の追加が正常に行われていることを確認
+		1. 上記の追加の取消処理
+		1. select文で、上記の取消処理が正常に行われていることを確認		
+		1. dept_copy表にdeptno「50」、dname「教育」、loc「大手町」を追加
+		1. dept_copy表にdeptno「60」、dname「システム」、loc「横浜」を追加
+		1. select文で、上記の追加が正常に行われていることを確認
+		1. 上記の追加の確定処理
+		1. 上記の追加の取消処理
+		1. select文で、上記の確定処理後の取消処理が無効であることを確認		
+	1. 以下の操作を行うスクリプト(141106-2.sql)
+		1. dept_copy表にdeptno「70」、dname「海外」、loc「浦添」を追加
+		1. セーブポイントを設定
+		1. dept_copy表にdeptno「80」、dname「製造」、loc「うるま」を追加
+		1. select文で、上記のdeptno「70」、「80」の両方の追加が正常に行われていることを確認
+		1. セーブポイントまで、取消処理
+		1. select文で、deptno「70」のみ追加されていること(deptno「80」の追加が取り消されていること)
+
+1. 2014/11/11
+
+	1. 以下の操作を行うスクリプト(141111-1.sql)
+		1. dept1表の作成
+			1. deptno, number(4), 主キー制約, 制約名：dept1_deptno_pk
+			1. dname varchar2(10), not null制約
+			1. loc, varchar2(10)
+		1. 重複するdeptnoのデータを追加し、一意制約違反が発生すること
+		1. dnameがnullのデータを追加し、NULLは追加できない旨の制約違反が発生すること
+		1. dept1表の削除
+	1. 以下の操作を行うスクリプト(141111-2.sql)
+		1. emp1表の作成
+			1. empno, number(4), 主キー制約, 制約名：emp1_empno_pk
+			1. ename, varchar2(10), not null制約, 制約名：emp1_ename_nn
+			1. deptno, number(4), dept1(deptno)への外部キー（参照整合性）制約, 制約名：emp1_dept1_deptno_fk
+		1. 重複するempnoのデータを追加し、一意制約違反が発生すること
+		1. enameがnullのデータを追加し、nullは追加できない旨の制約違反が発生すること
+		1. deptnoにdept1表のdeptnoに存在しないデータを追加し、参照整合性制約違反が発生すること
+		1. emp1表の削除
+		
+1. 2014/11/12
+
+	1. 以下の操作を行うスクリプト(141112-1.sql)
+		1. v_emp_deptビューの作成。employees表とdepartments表を結合し、deptnoが「10」のempno, ename, dnameを表示する
+		1. 上記ビューを使用し、select文を実行
+		1. 上記ビューを削除。
+	1. (前提)以下を実行し、emp2表を作成<br />
+create table emp2(empno primary key, ename not null, sal, deptno)<br />
+as select empno, ename, sal, deptno from employees;<br />
+以下の操作を行うスクリプト(141112-2.sql)
+		1. emp2表のempno, ename, sal, deptnoを表示するためのv_empビューの作成、作成したビューを使用し、empno, ename, sal, deptnoを表示する
+		1. 上記ビューを使用し、empnoが「1014」のデータを削除
+		1. 上記ビューを使用し、empnoが「1013」のsalを「300000」に変更 
+		1. 上記ビューを使用し、empno「1030」、ename「山口」、sal「200000」、deptno「null」のデータを追加
+		1. emp2を確認し、上記の削除／変更／追加が正常に行われていること確認
+		1. 上記ビューの削除
+
+1. 2014/11/13
+
+	1. 以下の操作を行うスクリプト(141113-1.sql)
+		1. s_ord順序の作成
+		1. select文を実行し、s_ord順序が正しく動作していることを確認
+		1. s_ord順序の増分値を10に変更
+		1. select文を実行し、s_ord順序が正しく動作していることを確認
+		1. s_ord順序を削除
+	1. 以下の操作を行うスクリプト(141113-2.sql)
+		1. departments表に対して、dept_sシノニムを作成
+		1. select文を実行し、dept1シノニムが正しく動作していることを確認
+		1. dept_sシノニムを削除
+	1. (前提)以下を実行し、emp3表を作成<br />
+create table emp3(empno primary key, ename not null sal not null, deptno)<br />
+as select empno, ename, sal, deptno from employees;<br />
+以下の操作を行うスクリプト(141113-3.sql)
+		1. emp3表のename列に対して、idx_emp3_ename索引を作成
+		1. 以下を実行し、idx_emp3_ename索引が作成されていること確認<br />
+select table_name, column_name, index_name, index_type<br />
+from user_indexes natural join user_ind_columns<br />
+where table_name = 'EMP3';
+		1. idx_emp3_ename索引を削除
+			
+1. 2014/11/18
+
+	1. 以下の処理を行うJavaクラス（クラス名：Select1.class)を作成
+		1. 社員番号を入力させる(標準入力)
+		1. employees表（自己結合）とdepartments表を結合
+		1. 入力された社員番号で検索し、以下を標準出力
+			1. 番号：(empno)
+			1. 名前：(ename)
+			1. 職種：(job)
+			1. 上司：(ename)
+			1. 部署：(dname)
+			1. 場所：(loc)
+		1. 見つからない場合は以下を標準出力
+			1. 指定された社員番号の社員は存在しません
