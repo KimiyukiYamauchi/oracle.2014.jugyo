@@ -289,10 +289,10 @@ deptnoがnullのデータについて、deptno「10」を設定し、正しく�
 		1. emp1表の作成
 			1. empno, number(4), 主キー制約, 制約名：emp1_empno_pk
 			1. ename, varchar2(10), not null制約, 制約名：emp1_ename_nn
-			1. deptno, number(4), dept1(deptno)への外部キー（参照整合性）制約, 制約名：emp1_dept1_deptno_fk
+			1. deptno, number(4), departments(deptno)への外部キー（参照整合性）制約, 制約名：emp1_dept1_deptno_fk
 		1. 重複するempnoのデータを追加し、一意制約違反が発生すること
 		1. enameがnullのデータを追加し、nullは追加できない旨の制約違反が発生すること
-		1. deptnoにdept1表のdeptnoに存在しないデータを追加し、参照整合性制約違反が発生すること
+		1. deptnoにdepartments表のdeptnoに存在しないデータを追加し、参照整合性制約違反が発生すること
 		1. emp1表の削除
 		
 1. 2014/11/12
@@ -337,6 +337,7 @@ where table_name = 'EMP3';
 			
 1. 2014/11/18
 
+	1. Sample.javaを各自のアカウントに変更して、動作確認
 	1. 以下の処理を行うJavaクラス（クラス名：Select1.class)を作成
 		1. 社員番号を入力させる(標準入力)
 		1. employees表（自己結合）とdepartments表を結合
@@ -347,3 +348,5 @@ where table_name = 'EMP3';
 			1. ename(上司)
 			1. dname(部署)
 			1. loc(場所)
+	1. 上記のJavaクラスのデータベースへの問い合わせを以下通り変更したクラスを作成（クラス名：Select2.class)<br />
+executeQuery => prepareStatement  
