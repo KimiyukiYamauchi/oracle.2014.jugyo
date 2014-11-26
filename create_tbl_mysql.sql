@@ -64,6 +64,10 @@ INSERT INTO employees VALUES
 INSERT INTO employees VALUES
 	(1014,'佐々木','sasaki','事務',1008,'2004-05-02',230000,NULL,10);
 
+ALTER TABLE employees
+ADD FOREIGN KEY(mgr)
+REFERENCES employees(empno);
+
 CREATE TABLE salgrades
       ( grade CHAR(1) PRIMARY KEY,
 	losal INT(7),
